@@ -33,37 +33,27 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             
-            // --- VALIDACIÓN DE TELÉFONO ACTUALIZADA ---
-            // 'regex:/^[0-9]+$/': Solo permite números (sin espacios ni guiones).
-            // 'digits_between:10,15': Mínimo 10 (Colombia), Máximo 15 (Estándar Internacional E.164).
+            // Validación de teléfono
             'phone' => ['required', 'string', 'regex:/^[0-9]+$/', 'digits_between:10,15'], 
             
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        // --- CREACIÓN DEL USUARIO (SOLO UNA VEZ) ---
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'password' => Hash::make($request->password),
-            // No agregamos 'is_admin' aquí, por lo que la base de datos
-            // automáticamente le pone '0' (Falso).
         ]);
 
-        $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-    ]);
+        // (Aquí tenías el código repetido que causaba el error, ya lo borré)
 
-    event(new Registered($user));
+        event(new Registered($user));
 
-    Auth::login($user);
+        Auth::login($user);
 
-    // LÓGICA DE DIRECCIONAMIENTO
-    if ($user->is_admin) {
-        return redirect(route('dashboard', absolute: false));
+        // Redirección al INICIO como pediste
+        return redirect(route('home'));
     }
-
-    return redirect(route('home'));
-}
 }

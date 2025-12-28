@@ -33,7 +33,49 @@
                     </div>
                 </header>
             @endif
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+    
+    @if(session('success'))
+        <div x-data="{ show: true }" x-show="show" class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-sm flex justify-between items-center mb-4">
+            <div class="flex items-center">
+                <i class="fa-solid fa-circle-check mr-2"></i>
+                <p>{{ session('success') }}</p>
+            </div>
+            <button @click="show = false" class="text-green-700 hover:text-green-900"><i class="fa-solid fa-times"></i></button>
+        </div>
+    @endif
 
+    @if(session('error'))
+        <div x-data="{ show: true }" x-show="show" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-sm flex justify-between items-center mb-4">
+            <div class="flex items-center">
+                <i class="fa-solid fa-triangle-exclamation mr-2"></i>
+                <p>{{ session('error') }}</p>
+            </div>
+            <button @click="show = false" class="text-red-700 hover:text-red-900"><i class="fa-solid fa-times"></i></button>
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div x-data="{ show: true }" x-show="show" class="bg-red-50 border-l-4 border-red-400 p-4 mb-4 rounded shadow-sm">
+            <div class="flex justify-between">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <i class="fa-solid fa-circle-xmark text-red-400"></i>
+                    </div>
+                    <div class="ml-3">
+                        <h3 class="text-sm font-medium text-red-800">Hay errores en el formulario:</h3>
+                        <ul class="mt-2 list-disc list-inside text-sm text-red-700">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+                <button @click="show = false" class="text-red-400 hover:text-red-600"><i class="fa-solid fa-times"></i></button>
+            </div>
+        </div>
+    @endif
+</div>
             <main>
                 {{ $slot }}
             </main>

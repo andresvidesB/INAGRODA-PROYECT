@@ -33,9 +33,9 @@ class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 t
                             <i class="fa-solid fa-gauge mr-2"></i> {{ __('Panel') }}
                         </x-nav-link>
                         
-                        <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.*')">
-                            <i class="fa-solid fa-newspaper mr-2"></i> {{ __('Publicaciones') }}
-                        </x-nav-link>
+                        <x-nav-link :href="route('admin.posts.index')" :active="request()->routeIs('admin.posts.*')">
+    <i class="fa-solid fa-newspaper mr-2"></i> {{ __('Publicaciones') }}
+</x-nav-link>
 
                         <x-nav-link :href="route('admin.messages')" :active="request()->routeIs('admin.messages')">
                             <i class="fa-solid fa-inbox mr-2"></i> {{ __('Mensajes') }}
@@ -117,9 +117,9 @@ class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 t
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Panel Admin') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.*')">
-                    {{ __('Publicaciones') }}
-                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.posts.index')" :active="request()->routeIs('admin.posts.*')">
+    <i class="fa-solid fa-newspaper mr-2"></i> {{ __('Publicaciones') }}
+</x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.messages')" :active="request()->routeIs('admin.messages')">
                     {{ __('Mensajes') }}
                 </x-responsive-nav-link>

@@ -10,9 +10,16 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'slug', 'content', 'type', 
-        'image_path', 'file_path', 'video_url', 
-        'amazon_link', 'is_published', 'user_id'
+        'title',
+        'slug',
+        'content',
+        'type',
+        'image_path',
+        'video_url',
+        'embed_url', // Si usas el truco del embed
+        'file_path',
+        'amazon_link',
+        'user_id', // <--- ¡ESTO ES LO IMPORTANTE!
     ];
 
     // Relación: Un post pertenece a un usuario (Admin)

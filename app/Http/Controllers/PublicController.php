@@ -9,15 +9,18 @@ use Illuminate\Http\Request;
 class PublicController extends Controller
 {
     // Página de Inicio
-    public function index()
-    {
-        // Traemos las últimas 3 noticias para mostrar en el inicio
-        $recentPosts = Post::where('is_published', true)
-                           ->orderBy('created_at', 'desc')
-                           ->take(3)
-                           ->get();
-        return view('welcome', compact('recentPosts'));
-    }
+   // app/Http/Controllers/PublicController.php
+
+public function index()
+{
+    // Traer 3 servicios para la muestra
+    $services = \App\Models\Service::take(3)->get();
+    
+    // Traer 3 noticias recientes
+    $posts = \App\Models\Post::latest()->take(3)->get();
+
+    return view('welcome', compact('services', 'posts'));
+}
 
     // Página Nosotros (Misión, Visión, Estatutos)
     public function about()

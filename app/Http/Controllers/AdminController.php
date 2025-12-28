@@ -156,6 +156,62 @@ class AdminController extends Controller
         return view('admin.users.show', compact('user'));
     }
 
+    // --- EDICIÓN Y ELIMINACIÓN DE USUARIOS ---
+
+    // 1. Mostrar formulario de edición
+    public function editUser($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.users.edit', compact('user'));
+    }
+
+    // 2. Guardar los cambios del usuario
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            // Validamos que el email sea único, PERO ignoramos el ID de este usuario
+            // para que no de error si deja su mismo correo.
+            'email' => 'required|email|unique:users,email,'.$user->id, 
+            'phone' => 'nullable|string|max:15',
+            'password' => 'nullable|min:8', // Opcional: solo si quiere cambiarla
+        ]);
+
+        // Actualizamos datos básicos
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+
+        // Si escribió una contraseña nueva, la encriptamos y guardamos
+        if ($request->filled('password')) {
+            $user->password = \Illuminate\Support\Facades\Hash::make($request->password);
+        }
+
+        // Actualizamos el Rol (Admin o Usuario)
+        // Usamos la asignación directa porque sacamos 'is_admin' del $fillable
+        $user->is_admin = $request->has('is_admin') ? 1 : 0;
+
+        $user->save();
+
+        return redirect()->route('admin.users.index')->with('success', 'Usuario actualizado correctamente.');
+    }
+
+    // 3. Eliminar usuario
+    public function destroyUser($id)
+    {
+        // Seguridad: No permitir que te borres a ti mismo
+        if ($id == auth()->id()) {
+            return back()->with('error', 'No puedes eliminar tu propia cuenta de administrador.');
+        }
+
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return back()->with('success', 'Usuario eliminado del sistema.');
+    }
+
     // --- 5. GESTIÓN DE SERVICIOS ---
     public function services()
     {

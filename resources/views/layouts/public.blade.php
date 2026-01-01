@@ -158,7 +158,7 @@
             <div>
                 <h4 class="font-bold text-lg mb-4 text-inagroda-gold">Contacto</h4>
                 <p class="text-gray-400 text-sm mb-2">+57 301 1501508</p>
-                <p class="text-gray-400 text-sm">contacto@inagroda.com</p>
+                <p class="text-gray-400 text-sm">contacto@inagroda.whf.bz</p>
             </div>
         </div>
     </footer>
